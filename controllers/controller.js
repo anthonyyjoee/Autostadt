@@ -1,5 +1,4 @@
 const { User, Profile, Item } = require('../models')
-const currencyFormatter = require('currency-formatter');
 const bcrypt = require('bcryptjs');
 const creatingRupiah = require('../helper/helps')
 
