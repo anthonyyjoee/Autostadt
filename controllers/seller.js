@@ -1,4 +1,5 @@
 const { User, Profile, Item } = require('../models')
+const fs = require('fs')
 const creatingRupiah = require('../helper/helps')
 
 class Seller {  
@@ -30,11 +31,12 @@ class Seller {
 
     static viewItems(req, res) {
         const userData = req.session.user
+        const userRole = req.session.user.role
         const userId = userData.id
         const option = { where: { SellerId: userId } }
 
         Item.findAll(option)
-            .then(data => res.render('login/seller/viewItems', { data, creatingRupiah, Item }))
+            .then(data => res.render('login/seller/viewItems', { data, creatingRupiah, Item, userRole }))
             .catch(err => res.send(err))
     }
 
@@ -68,9 +70,18 @@ class Seller {
     static deleteItem(req, res) {
         const itemId = req.params.id
 
-        Item.destroy({ where :{ id: itemId } })
+        Item.findByPk(itemId)
+            .then(data => {
+                if (data) {
+                    fs.unlinkSync(`./${data.photo}`)
+                    return Item.destroy({ where :{ id: itemId } })
+                }
+                else {
+                    throw new Error('no data')
+                }
+            })
             .then(() => res.redirect('/seller/items'))
-            .catch(err => res.send(err))
+            .catch(err => res.redirect(`/seller/items?errors=${err}`))
     }
 }
 

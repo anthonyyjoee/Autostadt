@@ -1,8 +1,10 @@
 const { User, Profile, Item, Transaction } = require('../models')
+const creatingRupiah = require('../helper/helps')
 
 class Customer {  
     static topup(req, res) {
-        res.render('login/customer/topup')
+        const userRole = req.session.user.role
+        res.render('login/customer/topup', { userRole })
         console.log(req.session);
     }
 
@@ -18,6 +20,7 @@ class Customer {
 
     static itemDetail(req, res) {
         const itemId = req.params.id
+        const userRole = req.session.user.role
         const { errors } = req.query
         const itemOpt = {
             attributes: { exclude: ['createdAt', 'updatedAt'] },
@@ -32,11 +35,11 @@ class Customer {
         }
 
         Item.findByPk(itemId, itemOpt)
-            .then(data => res.render('login/customer/itemDetail', { data, errors }))
+            .then(data => res.render('login/customer/itemDetail', { data, errors, userRole, Item, creatingRupiah }))
             .catch(err => res.send(err))
     }
 
-    static buy(req, res, next) {
+    static buy(req, res) {
         const userId = req.session.user.id
         const { itemId, price, stock, sellerId } = req.query
         
@@ -67,6 +70,24 @@ class Customer {
             .catch(err => {
                 res.redirect(`/customer/itemDetail/${itemId}?errors=${err}`)
             })
+    }
+
+    static history(req, res) {
+        const userId = req.session.user.id
+        const userRole = req.session.user.role
+        const option = { 
+            include: {
+                model: Item,
+                attributes: ['name', "price", 'photo'],
+            },
+        }
+
+        Transaction.findAll(option)
+            .then(data => {
+                console.log(data.Item);
+                res.render('login/customer/history', { data, userRole })
+            })
+            .catch(err => res.send(err))
     }
 }
 

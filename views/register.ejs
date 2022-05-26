@@ -1,42 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<%- include('./partials/head') %>
 <body>
-    <% if (errors) { %>
-        <% const realErrors = errors.replaceAll(',', ', ') %>
-        <p style="color:red"><%= realErrors %> </p>
-    <% } %>
-    <form action="/register" method="post">
-        <p>
-            firstname <br>
-            <input type="text" name="firstname">
-        </p>
-        <p>
-            lastname <br>
-            <input type="text" name="lastname">
-        </p>
-        <p>
-            register as <br>
-            <select name="role">
-                <option value="" hiden>Register As</option>
-                <option value="Customer">Customer</option>
-                <option value="Seller">Seller</option>
-            </select>
-        </p>
-        <p>
-            username <br>
-            <input type="text" name="username">
-        </p>
-        <p>
-            password <br>
-            <input type="password" name="password">
-        </p>
-        <input type="submit" value="Register">
-    </form>
+<%- include('./partials/landingPageNavBar') %>
+
+    <div class="w-screen h-screen flex justify-center items-center">
+        <div class="w-1/4 rounded-lg shadow-xl p-10 md:flex">
+            <div class="md:p-auto my-auto">
+                <h3 class="text-4xl font-bold flex justify-center items-center">Register</h3>
+                <% if (errors) { %>
+                    <p style="color:red; white-space: pre-line"><%= errors %> </p>
+                <% } %>
+                <form action="/register" method="post">
+                    <span class="text-sm">Firstname</span>
+                    <input type="text" name="firstname" class="w-full border bg-accent px-4 py-1 rounded-lg">
+
+                    <span class="text-sm">Lastname</span>
+                    <input type="text" name="lastname" class="w-full border bg-accent px-4 py-1 rounded-lg">
+
+                    <span class="text-sm">Register as?</span>
+                    <select name="role" class="w-full border bg-accent px-4 py-1 rounded-lg">
+                        <option value="" hidden>Register As</option>
+                        <option value="Customer">Customer</option>
+                        <option value="Seller">Seller</option>
+                    </select>
+
+                    <span class="text-sm">Username</span>
+                    <input type="text" name="username" class="w-full border bg-accent px-4 py-1 rounded-lg">
+
+                    <span class="text-sm">Password</span>
+                    <input type="password" name="password" class="w-full border bg-accent px-4 py-1 rounded-lg">
+
+                    <input type="submit" value="Register" class="font-bold w-full bg-gray text-white px-3 py-1 rounded-lg mt-4">
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

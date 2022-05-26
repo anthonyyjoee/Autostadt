@@ -10,6 +10,8 @@ router.get('/itemDetail/:id', Customer.itemDetail)
 
 router.post('/itemDetail/:id', Customer.buy)
 
+router.get('/history', Customer.history)
+
 
 
 

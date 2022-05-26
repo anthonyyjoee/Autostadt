@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<%- include('../../partials/head') %>
 <body>
-    <h1>top up</h1>
-    
-    <form action="/customer/topup" method="post">
-        <p>
-            ammount
-            <input type="number" name="money">
-        </p>
-        <input type="submit" value="Top up">
-    </form>
+    <%- include('../../partials/navbar') %>
+    <div class="w-screen h-screen flex justify-center items-center">
+        <div class="w-1/4 rounded-lg shadow-xl p-10 md:flex">
+            <div class="md:p-auto my-auto">
+                <h3 class="text-4xl font-bold flex justify-center items-center">Top-up</h3>
+                <form action="/customer/topup" method="post">
+                    <span class="text-sm">Ammount</span>
+                    <input type="number" name="money" class="w-full border bg-accent px-4 py-1 rounded-lg">
+
+                    <input type="submit" value="Top-up" class="font-bold w-full bg-gray text-white px-3 py-1 rounded-lg mt-4">
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

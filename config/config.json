@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "ecommerce",
+    "database": "Hando",
     "host": "localhost",
     "dialect": "postgres"
   },

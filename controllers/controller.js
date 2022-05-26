@@ -10,7 +10,8 @@ class Controller {
     }
 
     static registerPage(req, res) {
-        const { errors } = req.query
+        let { errors } = req.query
+        if (errors) errors = errors.replaceAll(',', '\n')
         res.render('register', { errors })
     }
 
@@ -36,7 +37,7 @@ class Controller {
             .then(() => res.redirect('/login'))
             .catch(err => {
                 if (err.name === "SequelizeValidationError") {
-                    const errors = err.errors.map(el => el.message).join().replaceAll(',', '\n')
+                    const errors = err.errors.map(el => el.message).join()
                     return res.redirect(`/register?errors=${errors}`)
                 }
                 res.redirect(`/register?errors=${err.message}`)
@@ -68,6 +69,7 @@ class Controller {
     }       
 
     static home(req, res) {
+        const { filter } = req.query
         const userId = req.session.user.id
         const userRole = req.session.user.role
         const itemOpt = {
@@ -81,6 +83,8 @@ class Controller {
                 }
             }
         }
+
+        if(filter) itemOpt.where = {category: filter}
         const data = {}
 
         Item.findAll(itemOpt)
