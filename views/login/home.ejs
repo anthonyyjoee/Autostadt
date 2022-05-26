@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head') %>
+<body>
+    <%- include('../partials/navbar') %>
+    <div class="w-screen h-screen flex justify-center items-center">
+        <div class="w-3/4 px-12 rounded-lg shadow-md py-4">
+            <div class="h-96 grid grid-cols-5 gap-5 overflow-auto pb-5">
+                <% items.forEach(({id, name, price, stock, description, category, photo, User}) => { %>
+                <div class="w-full h-75 shadow-xl rounded-lg">
+                    <img src="<%=`/${photo}`%>" alt="" class="w-full h-36 rounded-t-lg">
+                    <div class="">
+                        <p class="font-semibold pl-2 text-base"><%= name %></p>
+                        <p class="ml-3 text-sm text-gray">(<%= category %>)</p>
+                        <p class="ml-3 text-gray" style="font-size: 12px;"><%= User.Profile.getFulname() %></p>
+                    </div>
+                    <div class="ml-2 mt-7">
+                        <p class="pl-2 text-sm"><%= price %></p>
+                    </div>
+                    <div class="">
+                        <a href="/customer/itemDetail/<%= id %>" class="flex justify-center items-center font-semibold">
+                            <button class="w-full bg-gray px-3 mx-3 my-1 rounded-lg">detail</button>
+                        </a>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+            
+        </div>      
+    </div>
+</body>
+</html>

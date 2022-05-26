@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../partials/head') %>
+<body>
+    <%- include('../../partials/navbar') %>
+    <div class="w-screen h-screen flex justify-center items-center">
+        <div class="w-1/4 rounded-lg shadow-xl p-10 md:flex">
+            <div class="md:p-auto my-auto">
+                <h3 class="text-4xl font-bold flex justify-center items-center">Add Item</h3>
+                <form action="/seller/addItem" method="post" enctype="multipart/form-data">
+                    <span class="text-sm">Photo</span>
+                    <div class="h-16 bg-gray px-4 py-1 rounded-lg">
+                        <input type="file" name="photo" class="w-full mt-3">
+                    </div>
+
+                    <span class="text-sm">Name</span>
+                    <input type="text" name="name" class="w-full border bg-accent px-4 py-1 rounded-lg">
+                    
+                    <span class="text-sm">Price</span>
+                    <input type="number" name="price" class="w-full border bg-accent px-4 py-1 rounded-lg">    
+
+                    <span class="text-sm">Stock</span>
+                    <input type="text" name="stock" class="w-full border bg-accent px-4 py-1 rounded-lg">
+
+                    <span class="text-sm">Description</span>
+                    <textarea name="description" class="w-full border bg-accent px-4 py-1 rounded-lg"></textarea>
+
+                    <span class="text-sm">Category</span>
+                    <select name="category" class="w-full border bg-accent px-4 py-1 rounded-lg">
+                        <option value=""hidden>category</option>
+                        <option value="Motorcycle">Motorcycle</option>
+                        <option value="Car">Car</option>
+                    </select>
+                    <input type="submit" value="Add" class="font-bold w-full bg-gray text-white px-3 py-1 rounded-lg mt-4">
+                </form>
+                <a href="/home"><button class="font-bold w-full bg-gray text-white px-3 py-1 rounded-lg mt-4">Back</button></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

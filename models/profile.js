@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Profile.belongsTo(models.User)
     }
+
+    getFulname(){
+      return `${this.firstname} ${this.lastname}`
+    }
   }
 
   Profile.init({

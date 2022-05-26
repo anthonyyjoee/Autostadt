@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Edit Item</h1>
+    <% const {id, name, price, stock, description, category} = data %> ">
+
+    <form action="/seller/item/<%=id%>/edit" method="post">
+        <p>
+            name <br>
+            <input type="text" name="name" value="<%= name %>">
+        </p>
+
+        </p>
+            price <br>
+            <input type="number" name="price" value="<%= price %>">
+        </p>
+
+        <p>
+            stock <br>
+            <input type="text" name="stock" value="<%= stock %>">
+        </p>
+
+        <p>
+            description <br>
+            <textarea name="description" id="" cols="30" rows="10"><%= description %></textarea>
+        </p>
+
+        <p>
+            category <br>
+            <select name="category">
+                <option value=""hidden>category</option>
+                <% if (category === "Motorcycle") { %>
+                    <option value="Motorcycle" selected>Motorcycle</option>
+                <% } else {%>
+                    <option value="Motorcycle">Motorcycle</option>
+                <% } %>
+                <% if (category === "Car") { %>
+                    <option value="Car" selected>Car</option>
+                <% } else {%>
+                    <option value="Car">Car</option>
+                <% } %>
+            </select>
+        </p>
+
+        <input type="submit" value="add">
+    </form>
+    <a href="/seller/items"><button>back</button></a>
+</body>
+</html>

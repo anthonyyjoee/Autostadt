@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+<body>
+    <%- include('../partials/navbar') %>
+    <div class="w-screen h-screen flex justify-center items-center">
+        <div class="w-1/4 rounded-lg shadow-xl p-10 md:flex">
+            <div class="md:p-auto my-auto">
+                    <h3 class="text-4xl font-bold flex justify-center items-center">Account</h3>
+                    <form method="post" action="/account">
+                        <span class="text-sm">Firstname</span>
+                        <input type="text" name="firstname" value="<%= data.Profile.firstname %>" class="w-full border bg-accent px-4 py-1 rounded-lg">
+                        
+                        <span class="text-sm">Lastname</span>
+                        <input type="text" name="lastname" value="<%= data.Profile.lastname %>" class="w-full border bg-accent px-4 py-1 rounded-lg">    
+
+                        <span class="text-sm">Username</span>
+                        <input type="text" name="username" value="<%= data.username %>" class="w-full border bg-accent px-4 py-1 rounded-lg">
+
+                        <input type="submit" value="save" class="font-bold w-full bg-gray text-white px-3 py-1 rounded-lg mt-4">
+                    </form>
+                    <a href="/home"><button class="font-bold w-full bg-gray text-white px-3 py-1 rounded-lg mt-4">Back</button></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

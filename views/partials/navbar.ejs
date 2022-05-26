@@ -1,0 +1,32 @@
+<nav class="bg-gray shadow-lg">
+     <div class="container mx-auto">
+          <div class="sm:flex justify-around">
+              <!-- logo -->
+               <a href="/" class="text-white text-3xl font-bold p-3">Hando</a>
+
+              <!-- Menu  -->
+               <ul class="text-gray-400 sm:self-center text-xl border-t sm:border-none">
+                    <li class="sm:inline-block">
+                         <a href="/home" class="p-3 hover:text-white">Home</a>
+                    </li>
+                    <% if (userRole === "Seller") { %>
+                    <li class="sm:inline-block">
+                         <a href="/seller/items" class="p-3 hover:text-white">View Item</a>
+                    </li>
+                    <% } %>
+                    <% if (userRole === "Customer") { %>
+                    <li class="sm:inline-block">
+                         <a href="/customer/topup" class="p-3 hover:text-white">Top-up</a>
+                    </li>
+                    <% } %>
+                    
+                    <li class="sm:inline-block">
+                         <a href="/account" class="p-3 hover:text-white">Account</a>
+                    </li>
+                    <li class="sm:inline-block">
+                         <a href="/logout" class="p-3 hover:text-white">Logout</a>
+                    </li>
+               </ul>
+          </div>
+     </div>
+</nav>

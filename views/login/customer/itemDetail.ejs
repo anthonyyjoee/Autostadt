@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <% const {id, name, price, stock, description, category, photo, User} = data %> 
+    <img src="<%= `/${photo}`%>" width="200" height="200">
+
+    <h2>name: <%= name %></h2>
+    <h4>price: <%= price %></h4>
+    <h5>stock: <%= stock %></h5>
+    <h5>category: <%= category %></h5>
+    <h5>description: <%= description %></h5>
+    <h5>seller: <%= User.Profile.getFulname() %></h5>
+
+    <form action="<%= `/customer/itemDetail/${id}?itemId=${id}&price=${price}&stock=${stock}&sellerId=${User.id}` %>" method="post">
+        <input type="submit" value="Buy">
+    </form>
+</body>
+</html>

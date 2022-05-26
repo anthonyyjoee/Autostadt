@@ -1,5 +1,7 @@
-const { User, Profile } = require('../models')
-const bcrypt = require('bcryptjs')
+const { User, Profile, Item } = require('../models')
+const currencyFormatter = require('currency-formatter');
+const bcrypt = require('bcryptjs');
+const res = require('express/lib/response');
 
 
 class Controller {
@@ -14,7 +16,7 @@ class Controller {
     }
 
     static registerPost(req, res) {
-        const {firstname, lastname, username, password, role} = req.body
+        let {firstname, lastname, username, password, role} = req.body
         const profileErrors = "Firstname is required and only accept letter input"
 
         if (firstname === "" || /\d/.test(firstname)) {
@@ -52,10 +54,11 @@ class Controller {
         User.findOne({ where: { username: username } })
             .then(data => {
                 if (data) {
+                    const { id, username, role } = data
                     const isValidPass = bcrypt.compareSync(password, data.password)
 
                     if(isValidPass) {
-                        req.session.username = data.username
+                        req.session.user = {id, username, role}
                         return res.redirect('/home')
                     }
                 }
@@ -65,11 +68,68 @@ class Controller {
     }       
 
     static home(req, res) {
-        res.render('home')
+        const userId = req.session.user.id
+        const userRole = req.session.user.role
+        const itemOpt = {
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            include: {
+                model: User,
+                attributes: ['id', 'username'],
+                include: {
+                    model:Profile,
+                    attributes: ["firstname", "lastname"]
+                }
+            }
+        }
+        const data = {}
+
+        Item.findAll(itemOpt)
+            .then(dataItem => {
+                data.items = dataItem
+                return Profile.findByPk(userId)
+            })
+            .then(isLoginUserdata => {
+                const items = data.items
+                res.render('login/home', {isLoginUserdata, userRole, currencyFormatter, items})
+            })
+            .catch(err => res.send(err))
     }
 
-    static addItem(req, res) {
-        res.render('addItem')
+    static account(req, res) {
+        const userId = req.session.user.id
+        const userRole = req.session.user.role
+        const option = {
+            include: Profile,
+            where: { id: userId } 
+        }
+
+        User.findAll(option)
+            .then((data) => {
+                data = data[0]
+                res.render('login/account', { data, userRole })
+            })
+            .catch(err => res.send(err))
+    }
+
+    static saveEditedAccount(req, res) {
+        const { firstname, lastname, username } = req.body
+        const userId = req.session.user.id
+        const userOption = { where: { id: userId } }
+        const profileOption = { where: { UserId: userId } }
+
+        User.update({ username }, userOption)
+            .then(() => {
+                return Profile.update({ firstname, lastname }, profileOption)
+            })
+            .then(() => res.redirect('/home'))
+            .catch(err => res.send(err))
+    }
+
+    static logout(req, res) {
+        req.session.destroy(err => {
+            if (err) return res.send(err);
+            res.redirect('/')
+        })
     }
 }
 
