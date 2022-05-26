@@ -8,6 +8,10 @@
 </head>
 <body>
     <% const {id, name, price, stock, description, category, photo, User} = data %> 
+    <% if (errors) { %>
+        <% const realErrors = errors.replaceAll(',', ', ') %>
+        <p style="color:red"><%= realErrors %> </p>
+    <% } %>
     <img src="<%= `/${photo}`%>" width="200" height="200">
 
     <h2>name: <%= name %></h2>
