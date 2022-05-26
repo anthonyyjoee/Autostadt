@@ -4,8 +4,18 @@
 <body>
     <%- include('../partials/navbar') %>
     <div class="w-screen h-screen flex justify-center items-center">
-        <div class="w-3/4 px-12 rounded-lg shadow-md py-4">
-            <p>Money = <%= Item.addDot(creatingRupiah(isLoginUserdata.money)) %> </p>
+        <div class="w-3/4 px-12 py-4 rounded-lg shadow-md">
+            <p class="mb-5 text-lg font-semibold">Money: <%= Item.addDot(creatingRupiah(isLoginUserdata.money)) %> </p>
+            <h1 class="flex justify-center items-center text-4xl mb-6">Home</h1>
+            <a href="/home?filter=Car" class="">
+                <button class="w-1/6 bg-gray my-6 rounded-lg">Car</button>
+            </a>
+            <a href="/home?filter=Motorcycle" class="">
+                <button class="w-1/6 bg-gray my-6 rounded-lg">Motorcycle</button>
+            </a>
+            <a href="/home" class="">
+                <button class="w-1/6 bg-gray my-6 rounded-lg">Clear</button>
+            </a>
             <div class="h-96 grid grid-cols-5 gap-5 overflow-auto pb-5">
                 <% items.forEach(({id, name, price, stock, description, category, photo, User}) => { %>
                 <div class="w-full h-75 shadow-xl rounded-lg">

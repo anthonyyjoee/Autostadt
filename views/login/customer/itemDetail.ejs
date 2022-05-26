@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<%- include('../../partials/head') %>
 <body>
+<%- include('../../partials/navbar') %>    
     <% const {id, name, price, stock, description, category, photo, User} = data %> 
     <% if (errors) { %>
         <% const realErrors = errors.replaceAll(',', ', ') %>
         <p style="color:red"><%= realErrors %> </p>
     <% } %>
-    <img src="<%= `/${photo}`%>" width="200" height="200">
 
-    <h2>name: <%= name %></h2>
-    <h4>price: <%= price %></h4>
-    <h5>stock: <%= stock %></h5>
-    <h5>category: <%= category %></h5>
-    <h5>description: <%= description %></h5>
-    <h5>seller: <%= User.Profile.getFulname() %></h5>
+    <div class="w-screen h-screen flex justify-center items-center">
+        <div class="w-1/2 rounded-lg shadow-xl p-12">
+            <div class="grid grid-cols-2 gap-2">
+                <div class="px-3">
+                    <img src="<%= `/${photo}`%>" width="400" height="400">
+                </div>
+                    <div class="">
+                        <h1 class="text-3xl font-bold"><%= name %></h1>
+                        <p class="font-semibold"><%= Item.addDot(creatingRupiah(price)) %></p>
+                        <p class="font-gray mt-16">Stock: <%= stock %> </p>
+                        <p class="font-gray my-2">Category: <%= category %> </p>
+                        <p class="font-gray my-2">Seller: <%= User.Profile.getFulname()%> </p>
+                    </div>
+            </div>
 
-    <form action="<%= `/customer/itemDetail/${id}?itemId=${id}&price=${price}&stock=${stock}&sellerId=${User.id}` %>" method="post">
-        <input type="submit" value="Buy">
-    </form>
+            <div class="h-1/4 px-4 mt-4">
+                <p class="font-semibold text-lg">Description:</p>
+                <div class="overflow-auto w-full h-36 bg-gray rounded-lg p-3">
+                    <p style="white-space: pre-line;"><%= description %> </p>
+                </div>
+                <% if (userRole === "Customer") { %>
+                    <form action="<%= `/customer/itemDetail/${id}?itemId=${id}&price=${price}&stock=${stock}&sellerId=${User.id}` %>" method="post">
+                        <input type="submit" value="Buy" class="font-bold w-full bg-gray text-white px-3 py-1 rounded-sm mt-4">
+                    </form>
+                <% } %>
+                <% if (userRole === "Seller") { %>
+                    <a href="/home"><button class="font-bold w-full bg-gray text-white px-3 py-1 rounded-sm mt-4">Back</button></a>
+                <% } %>
+            </div>
+        </div>      
+    </div>
 </body>
 </html>
