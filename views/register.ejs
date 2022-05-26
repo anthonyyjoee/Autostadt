@@ -7,6 +7,10 @@
     <title>Document</title>
 </head>
 <body>
+    <% if (errors) { %>
+        <% const realErrors = errors.replaceAll(',', ', ') %>
+        <p style="color:red"><%= realErrors %> </p>
+    <% } %>
     <form action="/register" method="post">
         <p>
             firstname <br>

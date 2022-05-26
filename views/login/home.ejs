@@ -5,6 +5,7 @@
     <%- include('../partials/navbar') %>
     <div class="w-screen h-screen flex justify-center items-center">
         <div class="w-3/4 px-12 rounded-lg shadow-md py-4">
+            <p>Money = <%= Item.addDot(creatingRupiah(isLoginUserdata.money)) %> </p>
             <div class="h-96 grid grid-cols-5 gap-5 overflow-auto pb-5">
                 <% items.forEach(({id, name, price, stock, description, category, photo, User}) => { %>
                 <div class="w-full h-75 shadow-xl rounded-lg">
@@ -15,7 +16,7 @@
                         <p class="ml-3 text-gray" style="font-size: 12px;"><%= User.Profile.getFulname() %></p>
                     </div>
                     <div class="ml-2 mt-7">
-                        <p class="pl-2 text-sm"><%= price %></p>
+                        <p class="pl-2 text-sm"><%= Item.addDot(creatingRupiah(price)) %></p>
                     </div>
                     <div class="">
                         <a href="/customer/itemDetail/<%= id %>" class="flex justify-center items-center font-semibold">

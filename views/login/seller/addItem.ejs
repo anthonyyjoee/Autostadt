@@ -3,6 +3,10 @@
     <%- include('../../partials/head') %>
 <body>
     <%- include('../../partials/navbar') %>
+    <% if (errors) { %>
+        <% const realErrors = errors.replaceAll(',', ', ') %>
+        <p style="color:red"><%= realErrors %> </p>
+    <% } %>
     <div class="w-screen h-screen flex justify-center items-center">
         <div class="w-1/4 rounded-lg shadow-xl p-10 md:flex">
             <div class="md:p-auto my-auto">

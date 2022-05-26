@@ -1,7 +1,7 @@
 const { User, Profile, Item } = require('../models')
 const currencyFormatter = require('currency-formatter');
 const bcrypt = require('bcryptjs');
-const res = require('express/lib/response');
+const creatingRupiah = require('../helper/helps')
 
 
 class Controller {
@@ -12,7 +12,6 @@ class Controller {
     static registerPage(req, res) {
         const { errors } = req.query
         res.render('register', { errors })
-        console.log(errors);
     }
 
     static registerPost(req, res) {
@@ -45,7 +44,8 @@ class Controller {
     }
 
     static loginPage(req, res) {
-        res.render('login')
+        const { errors } = req.query
+        res.render('login', {errors})
     }
 
     static loginPost(req, res) {
@@ -90,7 +90,7 @@ class Controller {
             })
             .then(isLoginUserdata => {
                 const items = data.items
-                res.render('login/home', {isLoginUserdata, userRole, currencyFormatter, items})
+                res.render('login/home', {isLoginUserdata, userRole, currencyFormatter, items, creatingRupiah, Item})
             })
             .catch(err => res.send(err))
     }
