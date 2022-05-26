@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/register" method="post">
+        <p>
+            firstname <br>
+            <input type="text" name="firstname">
+        </p>
+        <p>
+            lastname <br>
+            <input type="text" name="lastname">
+        </p>
+        <p>
+            register as <br>
+            <select name="role">
+                <option value="" hiden>Register As</option>
+                <option value="Customer">Customer</option>
+                <option value="Seller">Seller</option>
+            </select>
+        </p>
+        <p>
+            username <br>
+            <input type="text" name="username">
+        </p>
+        <p>
+            password <br>
+            <input type="password" name="password">
+        </p>
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>
