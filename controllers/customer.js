@@ -1,4 +1,4 @@
-const { User, Profile, Item } = require('../models')
+const { User, Profile, Item, Transaction } = require('../models')
 
 class Customer {  
     static topup(req, res) {
@@ -11,13 +11,14 @@ class Customer {
         const userId = req.session.user.id
         const option = { where: { UserId: userId } }
 
-        Profile.update({ money }, option)
+        Profile.increment({ money: money }, option)
             .then(() => res.redirect('/home'))
             .catch(err => res.send(err))
     }
 
     static itemDetail(req, res) {
         const itemId = req.params.id
+        const { errors } = req.query
         const itemOpt = {
             attributes: { exclude: ['createdAt', 'updatedAt'] },
             include: {
@@ -31,20 +32,24 @@ class Customer {
         }
 
         Item.findByPk(itemId, itemOpt)
-            .then(data => res.render('login/customer/itemDetail', { data }))
+            .then(data => res.render('login/customer/itemDetail', { data, errors }))
             .catch(err => res.send(err))
     }
 
-    static buy(req, res) {
+    static buy(req, res, next) {
         const userId = req.session.user.id
         const { itemId, price, stock, sellerId } = req.query
         
-        User.findByPk(userId)
+        Profile.findOne({
+            where: {
+                UserId: userId
+            }
+        })
             .then(data => {
                 if(data.money < price) {
                     throw new Error('not enough balance')
                 }
-                if (stock == 0) {
+                if (+stock === 0) {
                     throw new Error('out of stock')
                 }
                 return Profile.increment({money: -price}, { where: { UserId: userId } })
@@ -53,10 +58,15 @@ class Customer {
                 return Item.increment({ stock: -1 }, { where: { id: itemId } })
             })
             .then(() => {
-                Profile.increment({ money: price }, { where: { UserId: sellerId } })
-                res.redirect(`/customer/itemDetail/${itemId}`)
+                return Profile.increment({ money: price }, { where: { UserId: sellerId } })
             })
-            .catch(err => res.send(err))
+            .then (() => {
+                Transaction.create({ItemId: itemId, CustomerId: userId})
+                res.redirect(`/home`)
+            })
+            .catch(err => {
+                res.redirect(`/customer/itemDetail/${itemId}?errors=${err}`)
+            })
     }
 }
 
