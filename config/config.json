@@ -14,10 +14,16 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "postgres",
+    "use_env_variable": "DATABASE_URL",
+    "ssl": true,
+    "dialect": "postgres",
+    "protocol": "postgres",
     "password": "postgres",
-    "database": "E-Commerce",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   }
 }
