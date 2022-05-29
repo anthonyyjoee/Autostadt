@@ -17,17 +17,18 @@
   },
   "homepage": "https://github.com/anthonyyjoee/E-Commerce#readme",
   "dependencies": {
+    "autoprefixer": "^10.4.7",
     "bcryptjs": "^2.4.3",
-    "currency-formatter": "^1.5.9",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
     "multer": "^1.4.4",
     "pg": "^8.7.3",
-    "sequelize": "^6.20.0"
+    "postcss": "^8.4.14",
+    "sequelize": "^6.20.0",
+    "tailwindcss": "^3.0.24"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16",
     "sequelize-cli": "^6.4.1"
   }
 }

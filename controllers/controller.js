@@ -64,7 +64,10 @@ class Controller {
                 }
                 res.redirect('/login?errors=Invalid password or username')
             })
-            .catch(err => res.send(err))
+            .catch(err => {
+                res.send(err)
+                console.log(err);
+            })
     }       
 
     static home(req, res) {
@@ -93,9 +96,12 @@ class Controller {
             })
             .then(isLoginUserdata => {
                 const items = data.items
-                res.render('login/home', {isLoginUserdata, userRole, currencyFormatter, items, creatingRupiah, Item})
+                res.render('login/home', {isLoginUserdata, userRole, items, creatingRupiah, Item})
             })
-            .catch(err => res.send(err))
+            .catch(err => {
+                res.send(err)
+                console.log(err);
+            })
     }
 
     static account(req, res) {

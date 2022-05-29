@@ -1,4 +1,4 @@
-const { Seller } = require('../controllers/Seller')
+const { Seller } = require('../controllers/seller')
 const router = require('express').Router()
 const multer = require('multer')
 
